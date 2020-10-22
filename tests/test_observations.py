@@ -5,8 +5,7 @@ from pyigra2.observations import Observations
 
 @pytest.fixture(scope="module")
 def obs(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_singel.path)
     yield obs
@@ -15,8 +14,7 @@ def obs(info):
 
 @pytest.fixture(scope="module")
 def obs_read(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_singel.path)
     obs.read()
@@ -26,8 +24,7 @@ def obs_read(info):
 
 @pytest.fixture(scope="module")
 def obs_read_convert(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_singel.path)
     obs.read()
@@ -38,8 +35,7 @@ def obs_read_convert(info):
 
 @pytest.fixture(scope="module")
 def obs_multi(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_multi.path)
     yield obs
@@ -48,8 +44,7 @@ def obs_multi(info):
 
 @pytest.fixture(scope="module")
 def obs_read_multi(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_multi.path)
     obs.read()
@@ -59,8 +54,7 @@ def obs_read_multi(info):
 
 @pytest.fixture(scope="module")
 def obs_read_convert_multi(info):
-    """ Create a fresh instance of Observations
-    """
+    """Create a fresh instance of Observations"""
     # Setup
     obs = Observations(info.obs_multi.path)
     obs.read()
@@ -70,8 +64,7 @@ def obs_read_convert_multi(info):
 
 
 def test_header_names(obs, observation_content):
-    """ Test that all header names is in the object
-    """
+    """Test that all header names is in the object"""
     expected_header_names = observation_content["expected_header_names"]
 
     # Object names
@@ -88,8 +81,7 @@ def test_header_names(obs, observation_content):
 
 
 def test_parameter_names(obs, observation_content):
-    """ Test that all header names is in the object
-    """
+    """Test that all header names is in the object"""
     expected_parameter_names = observation_content["expected_parameter_names"]
 
     # Object names
@@ -106,8 +98,7 @@ def test_parameter_names(obs, observation_content):
 
 
 def test_read_state(obs_read, observation_content):
-    """ Test read and check the state of the object
-    """
+    """Test read and check the state of the object"""
     # Check state
     assert isinstance(obs_read.filename, pathlib.PurePath)
     assert obs_read.raw_data
@@ -133,8 +124,7 @@ def test_read_state(obs_read, observation_content):
 
 
 def test_read_file_not_found():
-    """ Test if file is not found
-    """
+    """Test if file is not found"""
     obs = Observations("FileNotFound.txt")
 
     with pytest.raises(FileNotFoundError):
@@ -142,8 +132,7 @@ def test_read_file_not_found():
 
 
 def test_raw_data_structure(obs_read, info, observation_content):
-    """ Check the structure and content av .raw_data
-    """
+    """Check the structure and content av .raw_data"""
 
     # Check dates and hours:
     for date in info.obs_singel.dates:
@@ -171,8 +160,7 @@ def test_raw_data_structure(obs_read, info, observation_content):
 
 
 def test_raw_data_size(obs_read, info):
-    """ Check size of data lists
-    """
+    """Check size of data lists"""
 
     parameters = obs_read.raw_data[info.obs_singel.dates[0]][info.obs_singel.hours[0]][
         "parameters"
@@ -188,8 +176,7 @@ def test_raw_data_size(obs_read, info):
 
 
 def test_converted_data_structure(obs_read_convert, info, observation_content):
-    """ Check the structure and content av .converted_data
-    """
+    """Check the structure and content av .converted_data"""
 
     # Check dates and hours:
     for date in info.obs_singel.dates:
@@ -217,8 +204,7 @@ def test_converted_data_structure(obs_read_convert, info, observation_content):
 
 
 def test_converted_data_size(obs_read_convert, info):
-    """ Check size of data lists
-    """
+    """Check size of data lists"""
 
     parameters = obs_read_convert.converted_data[info.obs_singel.dates[0]][
         info.obs_singel.hours[0]
@@ -234,8 +220,7 @@ def test_converted_data_size(obs_read_convert, info):
 
 
 def test_raw_vs_converted(obs_read, obs_read_convert):
-    """ Compare raw_data and converted_data structure and number of headers and values for each parameter.
-    """
+    """Compare raw_data and converted_data structure and number of headers and values for each parameter."""
 
     raw = obs_read.raw_data
     converted = obs_read_convert.converted_data
@@ -259,8 +244,7 @@ def test_raw_vs_converted(obs_read, obs_read_convert):
 
 
 def test_print_converted(obs_read_convert, info, capsys):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     obs_read_convert.print(
         info.obs_singel.dates[0], info.obs_singel.hours[0], source="converted"
     )
@@ -273,8 +257,7 @@ def test_print_converted(obs_read_convert, info, capsys):
 
 
 def test_print_raw(obs_read_convert, info, capsys):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     obs_read_convert.print(
         info.obs_singel.dates[0], info.obs_singel.hours[0], source="raw"
     )
@@ -287,8 +270,7 @@ def test_print_raw(obs_read_convert, info, capsys):
 
 
 def test_print_missing_hour(obs_read_convert, info):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     missing_hour = "42"
     with pytest.raises(KeyError):
         obs_read_convert.print(info.obs_singel.dates[0], missing_hour, source="raw")
@@ -296,8 +278,7 @@ def test_print_missing_hour(obs_read_convert, info):
 
 # Multi-line
 def test_read_multi(obs_read_multi, info):
-    """ Multiline read
-    """
+    """Multiline read"""
     # Number of dates
     assert len(obs_read_multi.raw_data) == len(info.obs_multi.dates)
 
@@ -306,8 +287,7 @@ def test_read_multi(obs_read_multi, info):
 
 
 def test_raw_vs_converted_multi(obs_read_multi, obs_read_convert_multi):
-    """ Compare raw_data and converted_data structure and number of headers and values for each parameter.
-    """
+    """Compare raw_data and converted_data structure and number of headers and values for each parameter."""
 
     raw = obs_read_multi.raw_data
     converted = obs_read_convert_multi.converted_data

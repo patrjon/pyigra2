@@ -128,7 +128,7 @@ class Derived(IGRABase):
         }
 
     def _convert_header(self, header, date, hour):
-        """ Convert header
+        """Convert header
 
         :param header: header to convert
         :param date, date to update
@@ -296,7 +296,7 @@ class Derived(IGRABase):
             self.converted_data[date][hour]["header"][header_name] = header_value
 
     def _convert_parameters(self, parameters, date, hour):
-        """ Convert data
+        """Convert data
 
         :param parameters: parameters to convert
         :param date, date to update

@@ -7,8 +7,7 @@ import pytest
 
 @pytest.fixture(scope="session")
 def info():
-    """Collection of paths to datafiles
-    """
+    """Collection of paths to datafiles"""
     # Setup:
     data_path = pathlib.Path(__file__).parent.resolve() / "data"
 
@@ -58,8 +57,7 @@ def info():
 
 @pytest.fixture(scope="session")
 def observation_content():
-    """
-    """
+    """"""
     content = dict()
     # Expected header names
     content["expected_header_names"] = (
@@ -99,8 +97,7 @@ def observation_content():
 
 @pytest.fixture(scope="session")
 def derived_content():
-    """
-    """
+    """"""
     content = dict()
     # Expected header names
     content["expected_header_names"] = (

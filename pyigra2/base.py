@@ -9,7 +9,7 @@ import numpy as np
 
 class IGRABase:
     def __init__(self, filename):
-        """ Init method
+        """Init method
 
         IGRA.raw_data structure:
 
@@ -43,7 +43,7 @@ class IGRABase:
         self._parameters = {}
 
     def read(self):
-        """ Reads the file and stores the data in self.raw_data
+        """Reads the file and stores the data in self.raw_data
 
         :return: None
         """
@@ -83,7 +83,7 @@ class IGRABase:
             self._add_data()
 
     def convert_to_numpy(self):
-        """ Convert raw_data to correct types and SI-units.
+        """Convert raw_data to correct types and SI-units.
 
         :return: None
         """
@@ -103,7 +103,7 @@ class IGRABase:
                 self._convert_parameters(head_param["parameters"], date, hour)
 
     def print(self, date, hour, source="converted"):
-        """ Print date and hour to screen based on converted data
+        """Print date and hour to screen based on converted data
 
         :param date: date to print
         :param hour: hour to print
@@ -181,7 +181,7 @@ class IGRABase:
         print((width_all + width_add) * "_")
 
     def _add_data(self):
-        """ Add collected data to self.raw_data
+        """Add collected data to self.raw_data
 
         :return: None
         """
@@ -215,7 +215,7 @@ class IGRABase:
         self._reset_header_parameters()
 
     def _reset_header_parameters(self):
-        """ Reset the internal parameters for the next sounding.
+        """Reset the internal parameters for the next sounding.
 
         Resets the following parameters:
         * _header - empty dictionary
@@ -228,7 +228,7 @@ class IGRABase:
         self._parameters = {key: [] for key in list(self._parameters_name_index.keys())}
 
     def _set_header(self, line):
-        """ Collects data from header line.
+        """Collects data from header line.
 
         :param line: line from file
         :type line: str
@@ -240,7 +240,7 @@ class IGRABase:
             self._header[header_name] = line[index[0] - 1 : index[1]]
 
     def _set_parameters(self, line):
-        """ Collects data from data line.
+        """Collects data from data line.
 
         :param line: line from file
         :type line: str
@@ -252,7 +252,7 @@ class IGRABase:
             self._parameters[parameter_name].append(line[index[0] - 1 : index[1]])
 
     def _convert_header(self, header):
-        """ Convert header
+        """Convert header
 
         :param header: header to convert
         :return: None
@@ -261,7 +261,7 @@ class IGRABase:
         pass
 
     def _convert_parameters(self, parameters):
-        """ Convert data
+        """Convert data
 
         :param parameters: parameters to convert
         :return: None
@@ -271,7 +271,7 @@ class IGRABase:
 
     @staticmethod
     def _missing_test(missing_value, value):
-        """ Test if value is "missing_value", if not convert to float.
+        """Test if value is "missing_value", if not convert to float.
 
         :param missing_value: the missing value indicator, e.g. -99999
         :param value: the value to be checked and converted

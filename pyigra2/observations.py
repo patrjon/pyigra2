@@ -7,9 +7,7 @@ from pyigra2.base import IGRABase
 
 
 class Observations(IGRABase):
-    """ Observations is a class for reading and converting IGRA2 observation files
-
-    """
+    """Observations is a class for reading and converting IGRA2 observation files"""
 
     def __init__(self, filename):
         # Init parent class
@@ -88,7 +86,7 @@ class Observations(IGRABase):
         }
 
     def _convert_header(self, header, date, hour):
-        """ Convert header
+        """Convert header
 
         :param header: header to convert
         :param date, date to update
@@ -249,7 +247,7 @@ class Observations(IGRABase):
             self.converted_data[date][hour]["header"][header_name] = header_value
 
     def _convert_parameters(self, parameters, date, hour):
-        """ Convert data
+        """Convert data
 
         :param parameters: parameters to convert
         :param date, date to update

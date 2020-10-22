@@ -5,8 +5,7 @@ from pyigra2.derived import Derived
 
 @pytest.fixture(scope="module")
 def der(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_singel.path)
     yield der
@@ -15,8 +14,7 @@ def der(info):
 
 @pytest.fixture(scope="module")
 def der_read(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_singel.path)
     der.read()
@@ -26,8 +24,7 @@ def der_read(info):
 
 @pytest.fixture(scope="module")
 def der_read_convert(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_singel.path)
     der.read()
@@ -38,8 +35,7 @@ def der_read_convert(info):
 
 @pytest.fixture(scope="module")
 def der_multi(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_multi.path)
     yield der
@@ -48,8 +44,7 @@ def der_multi(info):
 
 @pytest.fixture(scope="module")
 def der_read_multi(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_multi.path)
     der.read()
@@ -59,8 +54,7 @@ def der_read_multi(info):
 
 @pytest.fixture(scope="module")
 def der_read_convert_multi(info):
-    """ Create a fresh instance of Derived
-    """
+    """Create a fresh instance of Derived"""
     # Setup
     der = Derived(info.der_multi.path)
     der.read()
@@ -70,8 +64,7 @@ def der_read_convert_multi(info):
 
 
 def test_header_names(der, derived_content):
-    """ Test that all header names is in the object
-    """
+    """Test that all header names is in the object"""
     expected_header_names = derived_content["expected_header_names"]
 
     # Object names
@@ -88,8 +81,7 @@ def test_header_names(der, derived_content):
 
 
 def test_parameter_names(der, derived_content):
-    """ Test that all header names is in the object
-    """
+    """Test that all header names is in the object"""
     expected_parameter_names = derived_content["expected_parameter_names"]
 
     # Object names
@@ -106,8 +98,7 @@ def test_parameter_names(der, derived_content):
 
 
 def test_read_state(der_read, derived_content):
-    """ Test read and check the state of the object
-    """
+    """Test read and check the state of the object"""
     # Check state
     assert isinstance(der_read.filename, pathlib.PurePath)
     assert der_read.raw_data
@@ -132,8 +123,7 @@ def test_read_state(der_read, derived_content):
 
 ##########
 def test_read_file_not_found():
-    """ Test if file is not found
-    """
+    """Test if file is not found"""
     der = Derived("FileNotFound.txt")
 
     with pytest.raises(FileNotFoundError):
@@ -141,8 +131,7 @@ def test_read_file_not_found():
 
 
 def test_raw_data_structure(der_read, info, derived_content):
-    """ Check the structure and content av .raw_data
-    """
+    """Check the structure and content av .raw_data"""
 
     # Check dates and hours:
     for date in info.der_singel.dates:
@@ -170,8 +159,7 @@ def test_raw_data_structure(der_read, info, derived_content):
 
 
 def test_raw_data_size(der_read, info):
-    """ Check size of data lists
-    """
+    """Check size of data lists"""
 
     parameters = der_read.raw_data[info.der_singel.dates[0]][info.der_singel.hours[0]][
         "parameters"
@@ -187,8 +175,7 @@ def test_raw_data_size(der_read, info):
 
 
 def test_converted_data_structure(der_read_convert, info, derived_content):
-    """ Check the structure and content av .converted_data
-    """
+    """Check the structure and content av .converted_data"""
 
     # Check dates and hours:
     for date in info.der_singel.dates:
@@ -216,8 +203,7 @@ def test_converted_data_structure(der_read_convert, info, derived_content):
 
 
 def test_converted_data_size(der_read_convert, info):
-    """ Check size of data lists
-    """
+    """Check size of data lists"""
 
     parameters = der_read_convert.converted_data[info.der_singel.dates[0]][
         info.der_singel.hours[0]
@@ -233,8 +219,7 @@ def test_converted_data_size(der_read_convert, info):
 
 
 def test_raw_vs_converted(der_read, der_read_convert):
-    """ Compare raw_data and converted_data structure and number of headers and values for each parameter.
-    """
+    """Compare raw_data and converted_data structure and number of headers and values for each parameter."""
 
     raw = der_read.raw_data
     converted = der_read_convert.converted_data
@@ -258,8 +243,7 @@ def test_raw_vs_converted(der_read, der_read_convert):
 
 
 def test_print_converted(der_read_convert, info, capsys):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     der_read_convert.print(
         info.der_singel.dates[0], info.der_singel.hours[0], source="converted"
     )
@@ -272,8 +256,7 @@ def test_print_converted(der_read_convert, info, capsys):
 
 
 def test_print_raw(der_read_convert, info, capsys):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     der_read_convert.print(
         info.der_singel.dates[0], info.der_singel.hours[0], source="raw"
     )
@@ -286,8 +269,7 @@ def test_print_raw(der_read_convert, info, capsys):
 
 
 def test_print_missing_hour(der_read_convert, info):
-    """ Test incorrect source
-    """
+    """Test incorrect source"""
     missing_hour = "42"
     with pytest.raises(KeyError):
         der_read_convert.print(info.der_singel.dates[0], missing_hour, source="raw")
@@ -295,8 +277,7 @@ def test_print_missing_hour(der_read_convert, info):
 
 # Multi-line
 def test_read_multi(der_read_multi, info):
-    """ Multiline read
-    """
+    """Multiline read"""
     # Number of dates
     assert len(der_read_multi.raw_data) == len(info.der_multi.dates)
 
@@ -305,8 +286,7 @@ def test_read_multi(der_read_multi, info):
 
 
 def test_raw_vs_converted_multi(der_read_multi, der_read_convert_multi):
-    """ Compare raw_data and converted_data structure and number of headers and values for each parameter.
-    """
+    """Compare raw_data and converted_data structure and number of headers and values for each parameter."""
 
     raw = der_read_multi.raw_data
     converted = der_read_convert_multi.converted_data
